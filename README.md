@@ -1,5 +1,5 @@
-# piccol
-piccol (pronounced "pickle") is a Python script to fetch the ten most used colors in an image and present the hex colors.
+# picol
+picol (pronounced "pickle") is a Python script to fetch the ten most used colors in an image and present the hex colors.
 
 &nbsp;
 
@@ -19,11 +19,11 @@ This script uses the `colorgram` library to extract the ten most used colors in 
 
 ## How to use
 
-Minimum to run the script is with path to an image as an argument: `./piccol.py ~/Pictures/picture.jpg`
+Minimum to run the script is with path to an image as an argument: `./picol.py ~/Pictures/picture.jpg`
 
 
 ```
-usage: piccol.py [-h] [-s] [-d] [-st] image
+usage: picol.py [-h] [-s] [-d] [-st] image
 
 positional arguments:
   image

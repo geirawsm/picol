@@ -19,9 +19,13 @@ _username = getpass.getuser()
 font_dir = '/home/{}/.fonts/'.format(_username)
 
 setup(
-    name='piccol',
+    name='picol',
     version='0.1',
-    packages=['piccol'],
+    author='armandg',
+    author_email='armandg@gmail.com',
+    description = ('picol (pronounced "pickle") will fetch the ten most used '
+                   'colors in an image and present the hex colors.'),
+    packages=['picol'],
     data_files=[
         (font_dir, [
             'fonts/OpenSans-BoldItalic.ttf',
