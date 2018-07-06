@@ -7,12 +7,14 @@ import getpass
 from PIL import Image, ImageDraw, ImageFont
 
 parser = argparse.ArgumentParser()
+parser.prog = 'piccol'
+parser.description = 'Extract the ten most used colors in an image.'
 parser.add_argument('image', action='store')
 parser.add_argument('-s', '--save-image', help='Save image to a given file',
                     action='store_true', dest='save_image')
 parser.add_argument('-d', '--do-not-show', help='Do not show the image that '
                     'is made', action='store_false', dest='do_not_show_image')
-parser.add_argument('-st', '--save-text', help='Save text to a given file',
+parser.add_argument('-st', '--save-text', help='Save tex0t to a given file',
                     action='store_true', dest='save_text')
 args = parser.parse_args()
 
