@@ -1,33 +1,31 @@
 from distutils.core import setup
-from distutils.command.install import install as _install
-import getpass
+import os
 
 
-def _post_install(dir):
-    from subprocess import call
-    call([sys.executable, 'fc-cache -f'])
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+FONT_DIR = os.path.join(BASE_DIR, 'fonts')
 
 
-class install(_install):
-    def run(self):
-        _install.run(self)
-        self.execute(_post_install, (self.install_lib,),
-                     msg="Running post install task")
+def read_full_documentation(filename):
+    with open(os.path.join(BASE_DIR, filename)) as fin:
+        return fin.read()
 
 
-_username = getpass.getuser()
-font_dir = '/home/{}/.fonts/'.format(_username)
+requirements = [
+    'colorgram.py',
+]
+
 
 setup(
     name='picol',
-    version='0.1',
+    version='0.2',
     author='armandg',
     author_email='armandg@gmail.com',
-    description = ('picol (pronounced "pickle") will fetch the ten most used '
-                   'colors in an image and present the hex colors.'),
+    description=('picol (pronounced "pickle") will fetch the ten most used '
+                 'colors in an image and present the hex colors.'),
     packages=['picol'],
-    data_files=[
-        (font_dir, [
+    package_data={
+        'picol': [
             'fonts/OpenSans-BoldItalic.ttf',
             'fonts/OpenSans-Bold.ttf',
             'fonts/OpenSans-ExtraBoldItalic.ttf',
@@ -37,8 +35,16 @@ setup(
             'fonts/OpenSans-Light.ttf',
             'fonts/OpenSans-Regular.ttf',
             'fonts/OpenSans-SemiboldItalic.ttf',
-            'fonts/OpenSans-Semibold.ttf'])],
+            'fonts/OpenSans-Semibold.ttf'
+        ]
+    },
+    install_requires=requirements,
+    include_package_data=True,
     license='GPL-v3.0',
-    long_description=open('README.md').read(),
-    cmdclass={'install': install},
+    long_description=read_full_documentation('README.rst'),
+    entry_points={
+        'console_scripts': [
+            'picol = picol.picol:main'
+        ]
+    },
 )
