@@ -10,3 +10,4 @@ name = "pypi"
 python_version = "3.5"
 
 [packages]
+"colorgram.py" = "*"

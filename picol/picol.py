@@ -3,25 +3,27 @@
 import sys
 import colorgram
 import argparse
-import getpass
 from PIL import Image, ImageDraw, ImageFont
 import os
 
 
 # The font directory is one level higher than this file.
-FONT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+FONT_DIR = os.path.join(
+    os.path.dirname(os.path.abspath(__file__)),
+    'fonts'
+)
 
 
 def get_font(fontname, size):
     try:
-        _username = getpass.getuser()
         font_object = ImageFont.truetype(
             os.path.join(FONT_DIR, fontname),
             size
         )
         return font_object
     except(OSError):
-        print('Couldn\'t find font\'{}\''.format(fontname))
+        print('Couldn\'t find font \'{}\''.format(fontname))
+        print('Searched {}'.format(FONT_DIR))
         sys.exit()
 
 
@@ -37,11 +39,10 @@ def rgb_to_hex(value1, value2, value3):
             '{2:02X}'.format(value1, value2, value3)}
 
 
-def get_center_position_hor(image_in_h):
+def get_center_position_hor(canvas_height, image_in_h):
     """
     Get the correct position for an image to center it horizontally
     """
-    global canvas_height
     if image_in_h < canvas_height:
         _canvas_mid = int(canvas_height / 2)
         _image_in_mid = int(image_in_h / 2)
@@ -50,11 +51,10 @@ def get_center_position_hor(image_in_h):
         return 0
 
 
-def get_center_position_ver(image_h_in):
+def get_center_position_ver(canvas_width, canvas_height, image_h_in):
     """
     Get the correct position for an image to center it vertically
     """
-    global canvas_width
     _canvas_mid = int(canvas_height / 2)
     _image_in_mid = int(image_h_in / 2)
     return _canvas_mid - _image_in_mid
@@ -64,9 +64,8 @@ def write_out(out, filename):
     """
     Write 'out' to 'filename'
     """
-    write_out = open(filename, 'w')
-    write_out.write(out)
-    write_out.close()
+    with open(filename, 'w') as fout:
+        fout.write(out)
 
 
 def main():
@@ -78,7 +77,7 @@ def main():
                         action='store_true', dest='save_image')
     parser.add_argument('-d', '--do-not-show', help='Do not show the image that '
                         'is made', action='store_false', dest='do_not_show_image')
-    parser.add_argument('-st', '--save-text', help='Save tex0t to a given file',
+    parser.add_argument('-st', '--save-text', help='Save text to a given file',
                         action='store_true', dest='save_text')
     args = parser.parse_args()
 
@@ -106,7 +105,7 @@ def main():
     canvas_width = 750
     img = Image.new('RGB', (canvas_width, canvas_height), 'white')
     # Paste image_in into canvas and find out center position
-    center_hor = get_center_position_hor(image_in_h)
+    center_hor = get_center_position_hor(canvas_height, image_in_h)
     img.paste(image_in, (0, center_hor))
     out = ImageDraw.Draw(img)
 
@@ -116,7 +115,7 @@ def main():
 
     # Write header
     title_w, title_h = title_fnt.getsize(file_name)
-    center_ver = get_center_position_ver(title_w)
+    center_ver = get_center_position_ver(canvas_width, canvas_height, title_w)
     out.text((center_ver, 7), file_name, font=title_fnt, fill=(0, 0, 0))
 
     write_output = 'Colors for \'{}\':'.format(file_name)

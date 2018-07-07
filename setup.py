@@ -7,12 +7,12 @@ FONT_DIR = os.path.join(BASE_DIR, 'fonts')
 
 
 def read_full_documentation(filename):
-    return open(os.path.join(BASE_DIR, filename)).read()
+    with open(os.path.join(BASE_DIR, filename)) as fin:
+        return fin.read()
 
 
 requirements = [
-    'cologram.py==1.1.0',
-    'Pillow==5.2.0',
+    'colorgram.py',
 ]
 
 
@@ -24,8 +24,8 @@ setup(
     description=('picol (pronounced "pickle") will fetch the ten most used '
                  'colors in an image and present the hex colors.'),
     packages=['picol'],
-    data_files=[
-        (FONT_DIR, [
+    package_data={
+        'picol': [
             'fonts/OpenSans-BoldItalic.ttf',
             'fonts/OpenSans-Bold.ttf',
             'fonts/OpenSans-ExtraBoldItalic.ttf',
@@ -35,12 +35,16 @@ setup(
             'fonts/OpenSans-Light.ttf',
             'fonts/OpenSans-Regular.ttf',
             'fonts/OpenSans-SemiboldItalic.ttf',
-            'fonts/OpenSans-Semibold.ttf'])],
+            'fonts/OpenSans-Semibold.ttf'
+        ]
+    },
+    install_requires=requirements,
+    include_package_data=True,
     license='GPL-v3.0',
     long_description=read_full_documentation('README.rst'),
     entry_points={
         'console_scripts': [
             'picol = picol.picol:main'
         ]
-    }
+    },
 )
