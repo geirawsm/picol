@@ -1,32 +1,35 @@
-from distutils.core import setup
-import os
+from setuptools import setup, find_packages
+from os import path
+from io import open
 
+here = path.abspath(path.dirname(__file__))
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-FONT_DIR = os.path.join(BASE_DIR, 'fonts')
-
-
-def read_full_documentation(filename):
-    with open(os.path.join(BASE_DIR, filename)) as fin:
-        return fin.read()
-
-
-requirements = [
-    'colorgram.py',
-]
-
+# Get the long description from the README file
+with open(path.join(here, 'README.md'), encoding='utf-8') as f:
+    long_description = f.read()
 
 setup(
     name='picol',
     version='0.2',
-    author='armandg',
-    author_email='armandg@gmail.com',
     description=('picol (pronounced "pickle") will fetch the ten most used '
                  'colors in an image and present the hex colors.'),
-    packages=['picol'],
+    long_description=long_description,
+    long_description_content_type='text/markdown',
+    license='GPL-v3.0',
+    author='armandg',
+    author_email='armandg@gmail.com',
+    entry_points={
+        'console_scripts': [
+            'picol = picol.picol:main'
+        ]
+    },
+    packages=find_packages(),
+    install_requires=[
+        'colorgram.py',
+        'pillow'
+    ],
     package_data={
         'picol': [
-            'fonts/OpenSans-BoldItalic.ttf',
             'fonts/OpenSans-Bold.ttf',
             'fonts/OpenSans-ExtraBoldItalic.ttf',
             'fonts/OpenSans-ExtraBold.ttf',
@@ -35,16 +38,8 @@ setup(
             'fonts/OpenSans-Light.ttf',
             'fonts/OpenSans-Regular.ttf',
             'fonts/OpenSans-SemiboldItalic.ttf',
-            'fonts/OpenSans-Semibold.ttf'
-        ]
-    },
-    install_requires=requirements,
-    include_package_data=True,
-    license='GPL-v3.0',
-    long_description=read_full_documentation('README.rst'),
-    entry_points={
-        'console_scripts': [
-            'picol = picol.picol:main'
+            'fonts/OpenSans-Semibold.ttf',
+            'README.md'
         ]
     },
 )

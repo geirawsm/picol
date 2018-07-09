@@ -6,10 +6,13 @@ picol (pronounced "pickle") is a Python script to fetch the ten most used colors
 ## Screens
 ![Screenshot1](https://user-images.githubusercontent.com/265139/42291684-9bb36758-7fcd-11e8-933d-733961d8950e.jpg)
 
+---
+
 ![Screenshot2](https://user-images.githubusercontent.com/265139/42291685-9bd48762-7fcd-11e8-81c6-7ef6331cf218.jpg)
 
-![Screenshot3](https://user-images.githubusercontent.com/265139/42291686-9bf4c428-7fcd-11e8-953b-a762da2b3f03.jpg)
+---
 
+![Screenshot3](https://user-images.githubusercontent.com/265139/42291686-9bf4c428-7fcd-11e8-953b-a762da2b3f03.jpg)
 
 &nbsp;
 
@@ -17,13 +20,22 @@ picol (pronounced "pickle") is a Python script to fetch the ten most used colors
 
 This script uses the `colorgram` library to extract the ten most used colors in an image. It then makes an image like shown in the screens above, or it can output text with links to www.hex-color.com.
 
+&nbsp;
+
+## Installation
+
+Easiest way possible:
+
+`pip install picol`
+
+&nbsp;
+
 ## How to use
 
-Minimum to run the script is with path to an image as an argument: `./picol.py ~/Pictures/picture.jpg`
-
+Run `picol` with path to an image as an argument: `picol ~/Pictures/picture.jpg`
 
 ```
-usage: picol.py [-h] [-s] [-d] [-st] image
+usage: piccol [-h] [-s] [-d] [-st] image
 
 positional arguments:
   image
@@ -40,4 +52,4 @@ optional arguments:
 
 ## Dependencies:
 - colorgram
-- Pillow
+- pillow
